@@ -1,15 +1,24 @@
 import Landing from './page/Landing'
-import styled from 'styled-components'
-const Button = styled.button`
-
-`
+import {  
+  BrowserRouter as Router,  
+  Routes,  
+  Route,  
+  Link  
+}   
+from 'react-router-dom';  
 
 function App() {
 
   return (
-    <div>
-      <Landing/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<div>DashBoard</div>} />
+        <Route path="/register" element={<div>Register</div>} />
+        <Route path="/landing" element={<Landing/>} />
+        <Route path="*" element={<div>404</div>}/>
+      </Routes>
+
+    </BrowserRouter>
   )
 }
 
