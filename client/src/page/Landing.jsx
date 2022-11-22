@@ -1,8 +1,9 @@
 import logo from '../assets/images/logo.svg'
 import main from '../assets/images/main.svg'
+import Wrapper from '../assets/wrappers/Testing'
 const Landing = () => {
   return (
-      <main>
+      <Wrapper>
           <nav>
               <img src={logo} alt="jobify" className='logo'/>
           </nav>
@@ -16,10 +17,15 @@ const Landing = () => {
                   </p>
                   <button className='btn btn-hero'>Login/Register</button>
               </div>
+              <div>
+                  
               <img src={main} alt="job hunt" className='img'/>
+              </div>
           </div>
-    </main>
+    </Wrapper>
   )
 }
+
+
 
 export default Landing
