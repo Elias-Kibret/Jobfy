@@ -1,8 +1,12 @@
-export const register = async (req, res) => {
+import userModel from "../Model/UserModel.js";
+
+export const register = async (req, res, next) => {
 	try {
-		res.status(200).json("successfull");
+		const user = await new userModel(req.body);
+		user.save();
+		res.status(201).json(user);
 	} catch (error) {
-		res.status(500).json(error);
+		next(error);
 	}
 };
 
