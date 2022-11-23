@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Alert } from ".";
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { Logo,FormRow } from "../components";
+import { useAppContext } from "../context/appContext";
 
 const Register = () => {
 	const initialState = {
@@ -9,9 +10,12 @@ const Register = () => {
 		email: '',
 		password: '',
 		isMember: true,
-		showAlert:true
+	
 	}
 	const [values, setValues] = useState(initialState)
+	//global state and useNavigate
+	const {isLoading,showAlert} = useAppContext()
+	console.log(state)
 	const handleChange = (e) => {
 		console.log(e.target)
 	}
@@ -23,15 +27,15 @@ const Register = () => {
 	const toggleMemeber = () => {
 		setValues({...values,isMember:!values.isMember})
 	}
-	//global state and useNavigate
+	
 	return (
 		<div className="full-page">
 			<form className="form" onSubmit={onSubmit}>
 				<Logo />
 				<h3>{values.isMember?"Login":"Register" }</h3>
-                {values.showAlert&&(<Alert/>)}
+                {showAlert&&(<Alert/>)}
 				{/* Name input */}
-				{!value.isMember
+				{!values.isMember
 				&&<FormRow  
 				type="text"
 				labelText="Name"
@@ -60,7 +64,7 @@ const Register = () => {
 				<button type="sumbit" className="btn btn-block">Submit</button>
 				<p>
 					{values.isMember?'Not a Member Yet ?':'Already a member?'}
-					<button type="button" onClick={toggleMember} className="member-btn">
+					<button type="button" onClick={toggleMemeber} className="member-btn">
 						{values.isMember?"Register":"Login"}
 					</button>
 				</p>
