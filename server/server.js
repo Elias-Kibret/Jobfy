@@ -6,12 +6,20 @@ import { connectDB } from "./DB/connect.js";
 dotenv.config();
 const app = express();
 
+//routes
+import authRouter from "./Routes/authRoutes.js";
+import jobRouter from "./Routes/jobRoutes.js";
+
 //middleware
 app.get("/", (req, res) => {
 	throw new Error("error");
 	res.send("Welcome");
 });
 app.use(express.json());
+
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/job", jobRouter);
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
