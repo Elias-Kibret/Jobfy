@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "��#\u0000 \u0000J\u0000o\u0000b\u0000f\u0000y\u0000\r\u0000 \u0000",
   "main": "server.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemone server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/Elias-Kibret/Jobfy/issues"
   },
-  "homepage": "https://github.com/Elias-Kibret/Jobfy#readme"
+  "homepage": "https://github.com/Elias-Kibret/Jobfy#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
+  }
 }
