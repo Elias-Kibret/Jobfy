@@ -8,7 +8,7 @@ const initialState = {
 
 const Register = () => {
 	const [value, setValue] = useState(initialState)
-	
+	//global state and useNavigate
 	return (
 		<>
 			<h1>Register</h1>;
