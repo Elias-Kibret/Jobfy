@@ -14,13 +14,18 @@ const Register = () => {
 	}
 	const [values, setValues] = useState(initialState)
 	//global state and useNavigate
-	const {isLoading,showAlert} = useAppContext()
-	console.log(state)
+	const {isLoading,showAlert,displayAlert} = useAppContext()
+
 	const handleChange = (e) => {
-		console.log(e.target)
+		setValues({...values,[e.target.name]:e.target.value})
 	}
 	const onSubmit = (e) => {
 		e.preventDefault()
+		const { name, email, password, isMember } = values
+		if (!email || !password || (!isMember && !name))
+		{
+			displayAlert()
+	    }
 		console.log(e.target)
 	}
 
@@ -56,7 +61,7 @@ const Register = () => {
                <FormRow  
 					type="password"
 					labelText="Password"
-					name="Password"
+					name="password"
 					value={values.password}
 					handleChange={handleChange}
 				/>
