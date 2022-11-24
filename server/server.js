@@ -11,13 +11,13 @@ const app = express();
 //routes
 import authRouter from "./Routes/authRoutes.js";
 import jobRouter from "./Routes/jobRoutes.js";
+app.use(cors());
 
 //middleware
 app.get("/", (req, res) => {
-	throw new Error("error");
+	// throw new Error("error");
 	res.send("Welcome");
 });
-app.use();
 app.use(express.json());
 console.log("hello");
 app.use("/api/v1/auth", authRouter);
