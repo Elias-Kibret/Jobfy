@@ -12,7 +12,8 @@ export const register = async (req, res, next) => {
 		throw new BadREquestError("Email already in use");
 	}
 	const user = await userModel.create({ name, email, password });
-	res.status(StatusCodes.CREATED).json(user);
+	const token = user.createJWT();
+	res.status(StatusCodes.CREATED).json({ name: user.getName(), token: token });
 };
 
 export const login = (req, res) => {

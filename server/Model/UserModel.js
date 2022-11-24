@@ -54,6 +54,9 @@ const userSchema = new mongoose.Schema(
 					}
 				);
 			},
+			getName() {
+				return this.name;
+			},
 		},
 	}
 );
