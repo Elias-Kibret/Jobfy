@@ -1,7 +1,19 @@
 import userModel from "../Model/UserModel.js";
 import { StatusCodes } from "http-status-codes";
+
+class CustomAPIError extends Error {
+	constructor(message) {
+		super(message);
+		// this.statusCode = StatusCodes.BAD_REQUEST;
+	}
+}
+
 export const register = async (req, res, next) => {
-	const user = await userModel.create(req.body);
+	const { name, email, password } = req.body;
+	if (!name || !email || !password) {
+		throw new BadREquestError("Please provide all values");
+	}
+	const user = await userModel.create({ name, email, password });
 	res.status(StatusCodes.CREATED).json(user);
 };
 
