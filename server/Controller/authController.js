@@ -7,6 +7,10 @@ export const register = async (req, res, next) => {
 	if (!name || !email || !password) {
 		throw new BadREquestError("Please provide all values");
 	}
+	const userAlreadtExists = await userModel.findOne({ email });
+	if (userAlreadtExists) {
+		throw new BadREquestError("Email already in use");
+	}
 	const user = await userModel.create({ name, email, password });
 	res.status(StatusCodes.CREATED).json(user);
 };
