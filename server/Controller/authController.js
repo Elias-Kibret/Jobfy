@@ -1,12 +1,6 @@
 import userModel from "../Model/UserModel.js";
 import { StatusCodes } from "http-status-codes";
-
-class CustomAPIError extends Error {
-	constructor(message) {
-		super(message);
-		// this.statusCode = StatusCodes.BAD_REQUEST;
-	}
-}
+import { BadREquestError } from "../Errors/index.js";
 
 export const register = async (req, res, next) => {
 	const { name, email, password } = req.body;
