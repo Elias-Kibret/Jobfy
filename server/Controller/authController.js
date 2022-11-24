@@ -1,13 +1,8 @@
 import userModel from "../Model/UserModel.js";
-
+import { StatusCodes } from "http-status-codes";
 export const register = async (req, res, next) => {
-	try {
-		const user = await new userModel(req.body);
-		user.save();
-		res.status(201).json(user);
-	} catch (error) {
-		next(error);
-	}
+	const user = await userModel.create(req.body);
+	res.status(StatusCodes.CREATED).json(user);
 };
 
 export const login = (req, res) => {
