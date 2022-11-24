@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js"
+ 
+    "server": "nodemon server.js",
+    "client":"npm run dev --prefix client",
+    "start":"concurrently   \"npm run server\" \"cd..&& cd client && npm run dev \" " 
   },
   "repository": {
     "type": "git",

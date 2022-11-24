@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 	res.send("Welcome");
 });
 app.use(express.json());
-
+console.log("hello");
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/job", jobRouter);
 
