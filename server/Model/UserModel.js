@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: [true, "Please provide Password"],
 			minLenth: 6,
+			select: false,
 		},
 		location: {
 			type: String,
