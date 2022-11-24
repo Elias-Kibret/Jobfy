@@ -6,10 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
- 
     "server": "nodemon server.js",
-    "client":"npm run dev --prefix client",
-    "start":"concurrently   \"npm run server\" \"cd..&& cd client && npm run dev \" " 
+    "client": "npm run dev --prefix client",
+    "start": "concurrently   \"npm run server\" \"cd..&& cd client && npm run dev \" "
   },
   "repository": {
     "type": "git",
@@ -24,6 +23,7 @@
   "homepage": "https://github.com/Elias-Kibret/Jobfy#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
