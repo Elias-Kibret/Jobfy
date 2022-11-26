@@ -2,15 +2,19 @@ import React, { useState, useReducer, useContext } from "react";
 import axios from "axios";
 import { CLEAR_ALERT, DISPLAY_ALERT,REGISTER_USER_BEGIN,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR } from "./actions";
 import reducer from "./reducer";
+const token = localStorage.getItem('token')
+const user = localStorage.getItem('user')
+const userLocation = localStorage.getItem('location')
+
 const initialState = {
 	isLoading: false,
 	showAlert: false,
 	alertType: "",
 	alertText: "",
-	user: null,
-	token: null,
-	userLocation: '',
-	jobLocation:''
+	user: user?JSON.parse(user):null,
+	token: token || null,
+	userLocation:userLocation || '',
+	jobLocation:userLocation || ''
 };
 //Create context
 const AppContext = React.createContext();
@@ -40,11 +44,22 @@ const AppProvider = ({ children }) => {
 				}
 			})
 			//local storage later
+			addUserToLocalStorage({user,token,location})
 		} catch (error) {
 			console.log(error.response)
 			dispatch({ type:REGISTER_USER_ERROR,payload:{msg:error.response.data.msg}})
 		}
 		clearAlert()
+	}
+	const addUserToLocalStorage = ({ user, token, location }) => {
+		localStorage.setItem('user', JSON.stringify(user))
+		localStorage.setItem('token', token)
+		localStorage.setItem('location',location)
+	}
+	const removeUserFromLocalStorage = () => {
+		localStorage.removeItem('token')
+		localStorage.removeItem('user')
+		localStorage.removeItem('location')
 	}
 
 	return (

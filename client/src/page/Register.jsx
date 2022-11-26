@@ -26,9 +26,18 @@ const Register = () => {
 		if (!email || !password || (!isMember && !name))
 		{
 			displayAlert()
-	    }
+			return
+		}
+		const currentUser = { name, email, password }
+		console.log(currentUser)
+		if (isMember) {
+			console.log('Already a member')
+		}
+		else {
+			regiterUser(currentUser)
+		}
 		console.log(e.target)
-		regiterUser(values)
+		 
 	}
 
 	const toggleMemeber = () => {
