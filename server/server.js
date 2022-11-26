@@ -3,7 +3,7 @@ import "express-async-errors";
 import errorHandlerMiddleware from "./middleware/error.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 import dotenv from "dotenv";
-// import cors from "cors";
+import cors from "cors";
 import { connectDB } from "./DB/connect.js";
 dotenv.config();
 const app = express();
@@ -11,10 +11,10 @@ const app = express();
 //routes
 import authRouter from "./Routes/authRoutes.js";
 import jobRouter from "./Routes/jobRoutes.js";
-// app.use(cors());
+app.use(cors());
 
 //middleware
-app.get("/api/v1", (req, res) => {
+app.get("/", (req, res) => {
 	// throw new Error("error");
 	res.send("Welcome");
 });
