@@ -58,6 +58,9 @@ const userSchema = new mongoose.Schema(
 			getName() {
 				return this.name;
 			},
+			comparePassword(password) {
+				return bcrypt.compare(password, this.password);
+			},
 		},
 	}
 );
