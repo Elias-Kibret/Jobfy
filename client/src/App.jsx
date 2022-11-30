@@ -12,7 +12,7 @@ function App() {
       <Route path="/" element={<ProtectedRoutes>
         <ShareLayout/>
         </ProtectedRoutes>}>
-        <Route path="stats" element={<Stats />} />
+        <Route index element={<Stats />} />
         <Route path="all-jobs" element={<AllJob />} />
         <Route path="add-job" element={<AddJob />} />
         <Route path="profile" element={ <Profile/>} />
