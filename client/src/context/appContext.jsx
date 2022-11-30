@@ -5,7 +5,8 @@ import {
 	DISPLAY_ALERT,
 	SETUP_USER_BEGIN,
 	SETUP_USER_SUCCESS,
-	SETUP_USER_ERROR
+	SETUP_USER_ERROR,
+	TOGGLE_SIDEBAR
 } from "./actions";
 
 
@@ -23,7 +24,8 @@ const initialState = {
 	user: user!==undefined?JSON.parse(user):null,
 	token: token || null,
 	userLocation:userLocation || '',
-	jobLocation:userLocation || ''
+	jobLocation: userLocation || '',
+	showSidebar:false
 };
 //Create context
 const AppContext = React.createContext();
@@ -51,7 +53,9 @@ const AppProvider = ({ children }) => {
 		localStorage.removeItem('user')
 		localStorage.removeItem('location')
 	}
-
+	const toggleSideBar = () => {
+	dispatch({type:TOGGLE_SIDEBAR})
+}
 	
 
 	const setupUser = async ({ currentUser, endPoint, alertText }) => {
