@@ -3,13 +3,15 @@ import {
   Route, 
 }   
 from 'react-router-dom';  
-import { Error, Landing, Register } from './page'
+import { Error, Landing, Register,ProtectedRoutes } from './page'
 import {Profile,AllJob,AddJob,ShareLayout,Stats} from './page/DashBoard'
 function App() {
 
   return (
     <Routes>
-        <Route path="/">
+      <Route path="/" element={<ProtectedRoutes>
+        <ShareLayout/>
+        </ProtectedRoutes>}>
         <Route path="stats" element={<Stats />} />
         <Route path="all-jobs" element={<AllJob />} />
         <Route path="add-job" element={<AddJob />} />
