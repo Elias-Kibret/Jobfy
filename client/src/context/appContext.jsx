@@ -6,7 +6,8 @@ import {
 	SETUP_USER_BEGIN,
 	SETUP_USER_SUCCESS,
 	SETUP_USER_ERROR,
-	TOGGLE_SIDEBAR
+	TOGGLE_SIDEBAR,
+	LOGOUT_USER
 } from "./actions";
 
 
@@ -16,7 +17,7 @@ const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
 const userLocation = localStorage.getItem('location')
 
-const initialState = {
+export const initialState = {
 	isLoading: false,
 	showAlert: false,
 	alertType: "",
@@ -55,7 +56,11 @@ const AppProvider = ({ children }) => {
 	}
 	const toggleSideBar = () => {
 	dispatch({type:TOGGLE_SIDEBAR})
-}
+	}
+	const logoutUser = () => {
+		dispatch({ type: LOGOUT_USER,payload:{showSidebar:false} })
+		removeUserFromLocalStorage()
+	}
 	
 
 	const setupUser = async ({ currentUser, endPoint, alertText }) => {
@@ -84,7 +89,7 @@ const AppProvider = ({ children }) => {
 }
 
 	return (
-		<AppContext.Provider value={{ ...state,displayAlert,setupUser}}>
+		<AppContext.Provider value={{ ...state,displayAlert,setupUser,toggleSideBar,logoutUser}}>
 			{/* Render child components */}
 			{children}
 		</AppContext.Provider>

@@ -4,6 +4,8 @@ import {  FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
 import { useAppContext } from '../context/appContext'
 import Logo from './Logo'
 const Navbar = () => {
+    const [showLogout, setShowLogout] = useState(false)
+    const {user, toggleSideBar,logoutUser}=useAppContext()
     return (
       <Wrapper>
             
@@ -11,7 +13,7 @@ const Navbar = () => {
                 <button
                     type="button"
                     className="toggle-btn"
-                    onClick={() => console.log('toggled')}
+                    onClick={toggleSideBar}
                 >
                     <FaAlignLeft />
                 </button>
@@ -23,17 +25,17 @@ const Navbar = () => {
                     <button
                         type="button"
                         className='btn'
-                        onClick={()=>{console.log('show/hide')}}
+                        onClick={()=>{console.log(setShowLogout(!showLogout))}}
                     >
                         <FaUserCircle />
-                        john
-                        <FaCaretDown/>
+                        {user?.name}
+                        <FaCaretDown />
                     </button>
-                    <div className="dropdown show-dropdown">
+                    <div className={ showLogout?'dropdown show-dropdown':'dropdown'}>
                         <button
                             type="button"
                             className='dropdown-btn'
-                            onClick={()=>console.log('logout')}
+                            onClick={logoutUser}
                         >
                          logout
                         </button>

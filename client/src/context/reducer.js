@@ -5,7 +5,9 @@ import {
 	SETUP_USER_SUCCESS,
 	SETUP_USER_ERROR,
 	TOGGLE_SIDEBAR,
+	LOGOUT_USER,
 } from "./actions";
+import { initialState } from "./appContext";
 const reducer = (state, action) => {
 	if (action.type === DISPLAY_ALERT) {
 		return {
@@ -54,10 +56,18 @@ const reducer = (state, action) => {
 	if (action.type === TOGGLE_SIDEBAR) {
 		return {
 			...state,
-			showSidebar: !showSidebar,
+			showSidebar: !state.showSidebar,
 		};
 	}
-
+	if (action.type === LOGOUT_USER) {
+		return {
+			...initialState,
+			user: null,
+			token: null,
+			userLoaction: null,
+			jobLocation: null,
+		};
+	}
 	throw new Error(`no such action :${action}`);
 };
 export default reducer;
