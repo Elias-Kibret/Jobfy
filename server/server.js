@@ -15,6 +15,7 @@ import jobRouter from "./Routes/jobRoutes.js";
 app.use(cors());
 
 //middleware
+import { authenticate_Middleware } from "./middleware/auth.js";
 app.get("/", (req, res) => {
 	// throw new Error("error");
 	res.send("Welcome");
@@ -25,7 +26,7 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 console.log("hello");
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/job", jobRouter);
+app.use("/api/v1/job", authenticate_Middleware, jobRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
