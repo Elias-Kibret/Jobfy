@@ -7,7 +7,8 @@ import {
 	SETUP_USER_SUCCESS,
 	SETUP_USER_ERROR,
 	TOGGLE_SIDEBAR,
-	LOGOUT_USER
+	LOGOUT_USER,
+	UPDATEUSER
 } from "./actions";
 
 
@@ -86,7 +87,11 @@ const AppProvider = ({ children }) => {
 			payload:{msg:"error.response.data.msg"}})
 		}
 		clearAlert()
-}
+	}
+	
+	const updateUser = async (currentUser)=>{
+		dispatch({type:UPDATEUSER,payload:{}})
+	}
 
 	return (
 		<AppContext.Provider value={{ ...state,displayAlert,setupUser,toggleSideBar,logoutUser}}>

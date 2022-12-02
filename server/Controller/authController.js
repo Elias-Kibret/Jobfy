@@ -46,7 +46,9 @@ export const login = async (req, res) => {
 
 export const updateUser = async (req, res) => {
 	const { email, name, lastName, location } = req.body;
-
+	if (!email || !name || !lastName || !location) {
+		throw new BadREquestError("please provide at least on field to be updated");
+	}
 	const user = await userModel.findOneAndUpdate(
 		{ id: req.user },
 		{
@@ -57,6 +59,9 @@ export const updateUser = async (req, res) => {
 		},
 		{ new: true }
 	);
-	console.log(user);
-	res.status(200).json("successfull");
+	const token = user.createJWT();
+
+	res
+		.status(StatusCodes.OK)
+		.json({ user, token, location, location: user.location });
 };

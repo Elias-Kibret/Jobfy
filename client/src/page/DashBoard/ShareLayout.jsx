@@ -13,7 +13,6 @@ const ShareLayout = () => {
 				</div>	
 			</div>
 		</main>
-		<Outlet/>
 	</Wrapper>
 };
 export default ShareLayout;

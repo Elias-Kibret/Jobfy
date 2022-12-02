@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Alert } from ".";
+import  Alert  from "../components/Alert";
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { Logo,FormRow } from "../components";
 import { useAppContext } from "../context/appContext";
