@@ -15,7 +15,7 @@ import jobRouter from "./Routes/jobRoutes.js";
 app.use(cors());
 
 //middleware
-import { authenticate_Middleware } from "./middleware/auth.js";
+import authenticate_Middleware from "./middleware/auth.js";
 app.get("/", (req, res) => {
 	// throw new Error("error");
 	res.send("Welcome");

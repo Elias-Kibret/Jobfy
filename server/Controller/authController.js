@@ -1,6 +1,7 @@
 import userModel from "../Model/UserModel.js";
 import { StatusCodes } from "http-status-codes";
 import { BadREquestError, UnauthenticatedError } from "../Errors/index.js";
+import user from "../Model/UserModel.js";
 
 export const register = async (req, res, next) => {
 	const { name, email, password } = req.body;
@@ -43,10 +44,19 @@ export const login = async (req, res) => {
 
 // 👨‍💻 Elias Kibret
 
-export const updateUser = (req, res) => {
-	try {
-		res.status(200).json("successfull");
-	} catch (error) {
-		res.status(500).json(error);
-	}
+export const updateUser = async (req, res) => {
+	const { email, name, lastName, location } = req.body;
+
+	const user = await userModel.findOneAndUpdate(
+		{ id: req.user },
+		{
+			name,
+			lastName,
+			email,
+			location,
+		},
+		{ new: true }
+	);
+	console.log(user);
+	res.status(200).json("successfull");
 };
