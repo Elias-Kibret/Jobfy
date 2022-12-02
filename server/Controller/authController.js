@@ -47,7 +47,7 @@ export const login = async (req, res) => {
 export const updateUser = async (req, res) => {
 	const { email, name, lastName, location } = req.body;
 	if (!email || !name || !lastName || !location) {
-		throw new BadREquestError("please provide at least on field to be updated");
+		throw new BadREquestError("please provide at least on field to be update");
 	}
 	const user = await userModel.findOneAndUpdate(
 		{ id: req.user },
