@@ -89,12 +89,19 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 	
-	const updateUser = async (currentUser)=>{
-		dispatch({type:UPDATEUSER,payload:{}})
+	const updateUser = async (data) => {
+		console.log(data)
+		dispatch({ type: SETUP_USER_BEGIN })
+		try {
+			const response = await axios.post('/api/v1/auth/updateUser', data)
+			console.log(response)
+		} catch (error) {
+			
+		}
 	}
 
 	return (
-		<AppContext.Provider value={{ ...state,displayAlert,setupUser,toggleSideBar,logoutUser}}>
+		<AppContext.Provider value={{ ...state,displayAlert,setupUser,updateUser,toggleSideBar,logoutUser,updateUser}}>
 			{/* Render child components */}
 			{children}
 		</AppContext.Provider>

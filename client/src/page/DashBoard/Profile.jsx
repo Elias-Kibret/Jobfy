@@ -17,16 +17,19 @@ const Profile = () => {
 	const [values, setValues] = useState(initailValues)
 	
 	const handleChange = (e) => {
-		 setValues({...values,[e.target.name]:e.target.value})
+		setValues({ ...values, [e.target.name]: e.target.value })
+	
 	}
-	const handleSubmit = () => {
+	const handleSubmit = (e) => {
 		e.preventDefault()
+
 		const {name,email,lastName,location}=values
 		if (!name || !email || !lastName || !location) {
 			displayAlert()
 			return
 		}
 		const data = { name, email, lastName, location }
+		console.log(data)
 		updateUser(data)
 
 	}
