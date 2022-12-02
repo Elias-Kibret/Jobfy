@@ -35,11 +35,17 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
 
 	const [state, dispatch] = useReducer(reducer, initialState);
+ 
 
 
-	
+	// axios.defaults.headers['Authorization'] = `Bearer ${state.token}`
 
-	axios.defaults.headers['Authorization'] = `Bearer ${state.token}`
+	const AuthFetch = axios.create({
+		baseURL: '/api/v1',
+		headers: {
+			Authorization:`Bearer ${state.token}`
+		}
+	})
 	
 
 
@@ -101,7 +107,7 @@ const AppProvider = ({ children }) => {
 	
 	const updateUser = async (currentData) => {
 		try {
-			const {data} = await axios.patch('/api/v1/auth/updateUser', currentData)
+			const {data} = await AuthFetch.patch('/auth/updateUser', currentData)
 			console.log(data)
 		} catch (error) {
 			
