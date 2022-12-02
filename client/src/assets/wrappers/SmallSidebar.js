@@ -66,6 +66,9 @@ const Wrapper = styled.aside`
 		place-items: center;
 		transition: var(--transition);
 	}
+	.text {
+		margin-left: 1rem;
+	}
 	.active {
 		color: var(--grey-900);
 	}
