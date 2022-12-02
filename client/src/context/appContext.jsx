@@ -33,8 +33,18 @@ export const initialState = {
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+
 	const [state, dispatch] = useReducer(reducer, initialState);
+
+
 	
+
+	axios.defaults.headers['Authorization'] = `Bearer ${state.token}`
+	
+
+
+
+
 	const displayAlert = () => {
 		dispatch({ type: DISPLAY_ALERT })
 		clearAlert()
@@ -89,12 +99,10 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 	
-	const updateUser = async (data) => {
-		console.log(data)
-		dispatch({ type: SETUP_USER_BEGIN })
+	const updateUser = async (currentData) => {
 		try {
-			const response = await axios.post('/api/v1/auth/updateUser', data)
-			console.log(response)
+			const {data} = await axios.patch('/api/v1/auth/updateUser', currentData)
+			console.log(data)
 		} catch (error) {
 			
 		}
