@@ -6,6 +6,9 @@ import {
 	SETUP_USER_ERROR,
 	TOGGLE_SIDEBAR,
 	LOGOUT_USER,
+	UPDATE_USER_BEGIN,
+	UPDATE_USER_SUCCESS,
+	UPDATE_USER_ERROR,
 } from "./actions";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -66,6 +69,34 @@ const reducer = (state, action) => {
 			token: null,
 			userLoaction: null,
 			jobLocation: null,
+		};
+	}
+	if (action.type === UPDATE_USER_BEGIN) {
+		return {
+			...state,
+			isLoading: true,
+		};
+	}
+	if (action.type === UPDATE_USER_SUCCESS) {
+		return {
+			...state,
+			isLoading: false,
+			token: action.payload.token,
+			user: action.payload.user,
+			location: action.payload.location,
+			jobLocation: action.payload.jobLocation,
+			showAlert: true,
+			alertType: "success",
+			alertText: action.payload.alertText,
+		};
+	}
+	if (action.type === UPDATE_USER_ERROR) {
+		return {
+			...state,
+			isLoading: false,
+			showAlert: true,
+			alertType: "danger",
+			alertText: action.payload.msg,
 		};
 	}
 	throw new Error(`no such action :${action}`);

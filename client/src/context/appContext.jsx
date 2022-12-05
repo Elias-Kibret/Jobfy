@@ -8,7 +8,9 @@ import {
 	SETUP_USER_ERROR,
 	TOGGLE_SIDEBAR,
 	LOGOUT_USER,
-	UPDATEUSER
+	UPDATE_USER_BEGIN,
+	UPDATE_USER_ERROR,
+	UPDATE_USER_SUCCESS
 } from "./actions";
 
 
@@ -39,12 +41,45 @@ const AppProvider = ({ children }) => {
 
 
 	// axios.defaults.headers['Authorization'] = `Bearer ${state.token}`
+	axios
 
-	const AuthFetch = axios.create({
-		baseURL: '/api/v1',
-		headers: {
-			Authorization:`Bearer ${state.token}`
+
+     // Instance of of axios
+	
+	const AuthFetch  = axios.create({
+		baseURL: '/api/v1'
+		
+	})
+
+	// request interceptors
+
+
+	AuthFetch.interceptors.request.use((config) => {
+		// Do something before request is sent
+		console.log(state.token)
+		config.headers.Authorization = `Bearer ${state.token}`
+		console.log(config)
+	    return config	
+	}, (error) => {
+		// Do something with request error
+		return Promise.reject(error)
+	})
+
+	//response interceptors
+
+	AuthFetch.interceptors.response.use((response) => {
+		// 2xx cause this function to trigger
+		// Do something with response data
+
+		return response	
+	}, (error) => {
+		// 2xx cause this function to trigger
+		// Do something with response error
+		if (error.response.status === 401) {
+			logoutUser()
+			removeUserFromLocalStorage()
 		}
+		return Promise.reject(error)
 	})
 	
 
@@ -106,16 +141,24 @@ const AppProvider = ({ children }) => {
 	}
 	
 	const updateUser = async (currentData) => {
+		dispatch({type:UPDATE_USER_BEGIN})
 		try {
-			const {data} = await AuthFetch.patch('/auth/updateUser', currentData)
-			console.log(data)
+			const response = await AuthFetch.patch('/auth/updateUser', currentData)
+			console.log(response.data)
+			const {user,token,location}=response.data
+			dispatch({ type: UPDATE_USER_SUCCESS, payload: { user, token, location } })
+			addUserToLocalStorage({user,token,location})
 		} catch (error) {
-			
+			if (error.response.status !== 401) {
+				
+				dispatch({ type: UPDATE_USER_ERROR, payload: { msg: '' } })
+			}
 		}
+		clearAlert()
 	}
 
 	return (
-		<AppContext.Provider value={{ ...state,displayAlert,setupUser,updateUser,toggleSideBar,logoutUser,updateUser}}>
+		<AppContext.Provider value={{ ...state,displayAlert,setupUser,updateUser,toggleSideBar,logoutUser}}>
 			{/* Render child components */}
 			{children}
 		</AppContext.Provider>
