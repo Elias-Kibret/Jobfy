@@ -10,7 +10,8 @@ import {
 	LOGOUT_USER,
 	UPDATE_USER_BEGIN,
 	UPDATE_USER_ERROR,
-	UPDATE_USER_SUCCESS
+	UPDATE_USER_SUCCESS,
+	HANDLE_CHANGE
 } from "./actions";
 
 
@@ -166,9 +167,11 @@ const AppProvider = ({ children }) => {
 		}
 		clearAlert()
 	}
-
+	const handleChange = ({ name, value }) => {
+	dispatch({type:HANDLE_CHANGE,payload:{name,value}})
+}
 	return (
-		<AppContext.Provider value={{ ...state,displayAlert,setupUser,updateUser,toggleSideBar,logoutUser}}>
+		<AppContext.Provider value={{ ...state,displayAlert,setupUser,updateUser,toggleSideBar,logoutUser,handleChange}}>
 			{/* Render child components */}
 			{children}
 		</AppContext.Provider>
