@@ -1,4 +1,4 @@
- //Linkedin Post
+
 import { useState } from "react"
  const [info, setInfo] = useState([{
      Name: '',
