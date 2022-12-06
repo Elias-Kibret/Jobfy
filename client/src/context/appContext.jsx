@@ -28,8 +28,18 @@ export const initialState = {
 	user: user!==undefined?JSON.parse(user):null,
 	token: token || null,
 	userLocation:userLocation || '',
+	showSidebar: false,
+	isEditing: false,
+	editJobId: '',
+	position: '',
+	company: '',
 	jobLocation: userLocation || '',
-	showSidebar:false
+	JobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
+	jpbType: 'full-time',
+	statusOptions: ['interview', 'declined','pending'],
+	status:'pending'
+
+
 };
 //Create context
 const AppContext = React.createContext();
