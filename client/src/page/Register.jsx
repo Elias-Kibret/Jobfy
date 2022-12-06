@@ -29,7 +29,7 @@ const Register = () => {
 			return
 		}
 		const currentUser = { name, email, password }
-		console.log(currentUser)
+		
 		if (isMember) {
 			console.log('Already a member')
 			setupUser({currentUser,endPoint:'login',alertText:'Login Successful! Redirecting...'})
