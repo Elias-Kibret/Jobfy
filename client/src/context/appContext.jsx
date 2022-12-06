@@ -34,8 +34,8 @@ export const initialState = {
 	position: '',
 	company: '',
 	jobLocation: userLocation || '',
-	JobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
-	jpbType: 'full-time',
+	jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
+	jobType: 'full-time',
 	statusOptions: ['interview', 'declined','pending'],
 	status:'pending'
 
