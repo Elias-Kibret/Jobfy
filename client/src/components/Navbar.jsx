@@ -28,6 +28,7 @@ const Navbar = () => {
                         onClick={()=>{console.log(setShowLogout(!showLogout))}}
                     >
                         <FaUserCircle />
+                   
                         {user?.name}
                         <FaCaretDown />
                     </button>

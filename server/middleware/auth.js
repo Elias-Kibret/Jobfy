@@ -16,7 +16,8 @@ const authenticate_Middleware = async (req, res, next) => {
 				next();
 			}
 			if (err) {
-				throw new UnauthenticatedError("Invalid Token");
+				console.log(err);
+				// throw new UnauthenticatedError("Invalid Token");
 			}
 		});
 	} catch {

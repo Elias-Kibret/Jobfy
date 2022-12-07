@@ -4,20 +4,35 @@ import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useState } from 'react';
 import { FormRowSelect } from '../../components/FormRowSelect';
 const AddJob = () => {
-	const { isEditing,  handleChange,showAlert, displayAlert, position, company, jobLocation, jobType, jobTypeOptions, status,statusOptions } = useAppContext()
+	const { isEditing,
+		handleChange,
+		showAlert,
+		handleClear,
+		displayAlert,
+		position,
+		company,
+		jobLocation,
+		jobType,
+		jobTypeOptions,
+		status,
+		statusOptions,
+		isLoading,
+		createJob
+	} = useAppContext()
 	 
-
-	const handeleSubmit = (e) => {
+	const handelSubmit = (e) => {
 		e.preventDefault()
 		if (!position || !company || !jobLocation) {
 			displayAlert()
 			return
 		}
-		
+		if (isEditing) {
+			return
+		}
+		createJob()
 		
 	}
 	
-
 	const handleJobInput = (e) => {
 		e.preventDefault()
 		const name = e.target.name
@@ -73,9 +88,20 @@ const AddJob = () => {
 					value={status}
 				/>
 				<div className='btn-container'>
-					<button type="submit" className='btn btn-block submit-btn'>
+					<button
+						type="submit"
+						className='btn btn-block submit-btn '
+						onClick={handelSubmit}
+						disabled={isLoading}
+					>
 						Submit
-				   </button>
+					</button>
+					<button className='btn btn-block clear-btn' onClick={(e) => {
+						e.preventDefault()
+						handleClear()
+					}}>
+						Clear
+					</button>
 				</div>
 				{/* Job Status */}
 

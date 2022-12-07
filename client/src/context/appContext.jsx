@@ -11,12 +11,16 @@ import {
 	UPDATE_USER_BEGIN,
 	UPDATE_USER_ERROR,
 	UPDATE_USER_SUCCESS,
-	HANDLE_CHANGE
+	HANDLE_CHANGE,
+	CLEAR_VALUES,
+	CREATE_JOB_BEGIN,
+	CREATE_JOB_ERROR,
+	CREATE_JOB_SUCCESS
 } from "./actions";
 
 
 import reducer from "./reducer";
-import e from "cors";
+
 const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
 const userLocation = localStorage.getItem('location')
@@ -128,7 +132,6 @@ const AppProvider = ({ children }) => {
 
 	const setupUser = async ({ currentUser, endPoint, alertText }) => {
 		 console.log(currentUser, endPoint, alertText)
-		// const {name}=currentUser
 		console.log(endPoint)
 		dispatch({ type: SETUP_USER_BEGIN })
 		try {
@@ -143,7 +146,7 @@ const AppProvider = ({ children }) => {
 			})
 			addUserToLocalStorage({ user, token, location })
 		} catch (error) {
-			// console.log(error.response.data)
+			
 			dispatch({
 				type:SETUP_USER_ERROR,
 			payload:{msg:"error.response.data.msg"}})
@@ -169,9 +172,47 @@ const AppProvider = ({ children }) => {
 	}
 	const handleChange = ({ name, value }) => {
 	dispatch({type:HANDLE_CHANGE,payload:{name,value}})
-}
+	}
+	
+	const handleClear = () => {
+		dispatch({type:CLEAR_VALUES})
+	}
+
+	const createJob = async () => {
+		dispatch({ type: CREATE_JOB_BEGIN })
+		try {
+			const { position, company, jobLocation, jobType, status } = state
+			console.log(state)
+			await AuthFetch.post('/job', {
+				position,
+				company,
+				jobLocation,
+				jobType,
+				status
+			})
+	
+			dispatch({ type: CREATE_JOB_SUCCESS })
+			dispatch({type:CLEAR_VALUES})
+		} catch (error) {
+			if (error.response.status === 401) return
+			dispatch({ type:CREATE_JOB_ERROR,payload:{msg:'Error'}})
+			
+		}
+		clearAlert()
+	}
+
 	return (
-		<AppContext.Provider value={{ ...state,displayAlert,setupUser,updateUser,toggleSideBar,logoutUser,handleChange}}>
+		<AppContext.Provider value={{
+			...state,
+			displayAlert,
+			setupUser,
+			updateUser,
+			toggleSideBar,
+			handleClear,
+			logoutUser,
+			handleChange,
+			createJob
+		}}>
 			{/* Render child components */}
 			{children}
 		</AppContext.Provider>
