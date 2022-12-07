@@ -15,7 +15,10 @@ import {
 	CLEAR_VALUES,
 	CREATE_JOB_BEGIN,
 	CREATE_JOB_ERROR,
-	CREATE_JOB_SUCCESS
+	CREATE_JOB_SUCCESS,
+	GET_JOBS_BEGIN,
+	GET_JOBS_SUCCESS,
+	GET_JOBS_ERROR
 } from "./actions";
 
 
@@ -188,6 +191,17 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 
+	const getAllJob = async () => {
+		dispatch({ type: GET_JOBS_BEGIN })
+		try {
+			const response = await AuthFetch.get('/job')
+			
+		} catch (error) {
+			
+		}
+	}
+	
+
 	return (
 		<AppContext.Provider value={{
 			...state,
@@ -198,7 +212,8 @@ const AppProvider = ({ children }) => {
 			handleClear,
 			logoutUser,
 			handleChange,
-			createJob
+			createJob,
+			getAllJob
 		}}>
 			{/* Render child components */}
 			{children}
