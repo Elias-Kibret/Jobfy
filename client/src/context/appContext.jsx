@@ -42,9 +42,11 @@ export const initialState = {
 	jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
 	jobType: 'full-time',
 	statusOptions: ['interview', 'declined','pending'],
-	status:'pending'
-
-
+	status: 'pending',
+	jobs: [],
+	totalJobs: 0,
+	numOfpages: 1,
+	pages:1
 };
 //Create context
 const AppContext = React.createContext();
@@ -53,22 +55,11 @@ const AppProvider = ({ children }) => {
 
 	const [state, dispatch] = useReducer(reducer, initialState);
  
-
-
-	// axios.defaults.headers['Authorization'] = `Bearer ${state.token}`
 	axios
-
-
-     // Instance of of axios
-	
 	const AuthFetch  = axios.create({
 		baseURL: '/api/v1'
 		
 	})
-
-	// request interceptors
-
-
 	AuthFetch.interceptors.request.use((config) => {
 		// Do something before request is sent
 		console.log(state.token)
@@ -97,10 +88,6 @@ const AppProvider = ({ children }) => {
 		return Promise.reject(error)
 	})
 	
-
-
-
-
 	const displayAlert = () => {
 		dispatch({ type: DISPLAY_ALERT })
 		clearAlert()

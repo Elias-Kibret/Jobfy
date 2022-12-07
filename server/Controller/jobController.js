@@ -1,5 +1,6 @@
 import job from "../Model/JobModel.js";
 import jobModel from "../Model/JobModel.js";
+import { StatusCodes } from "http-status-codes";
 export const createJob = async (req, res) => {
 	const { company, position, status, jobType, jobLocation } = req.body;
 
@@ -22,7 +23,10 @@ export const deleteJob = async (req, res) => {
 	}
 };
 export const getAllJobs = async (req, res) => {
-	const jobs = await find;
+	const jobs = await jobModel.find({ createdBy: req.user });
+	res
+		.status(StatusCodes.OK)
+		.json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
 };
 export const updateJob = async (req, res) => {
 	try {
