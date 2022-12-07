@@ -27,9 +27,9 @@ const jobSchema = new mongoose.Schema(
 			default: "My-City",
 			required: true,
 		},
-		creetedBy: {
+		createdBy: {
 			type: mongoose.Types.ObjectId,
-			ref: "User".at,
+			ref: "User",
 			required: [true, "Please provide user"],
 		},
 	},
