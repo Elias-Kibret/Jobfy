@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 import { CustomAPIError } from "../Errors/custom-API-Error.js";
 import checkPermissions from "../utils/checkPermission.js";
 import mongoose from "mongoose";
+import moment from "moment";
 export const createJob = async (req, res) => {
 	const { company, position, status, jobType, jobLocation } = req.body;
 
@@ -69,6 +70,38 @@ export const showStats = async (req, res) => {
 		interview: stats.interview || 0,
 		declined: stats.declined || 0,
 	};
-	let monthlyApplications = [];
+	let monthlyApplications = await jobModel.aggregate([
+		{
+			$match: { createdBy: mongoose.Types.ObjectId(req.user) },
+		},
+		{
+			$group: {
+				_id: {
+					year: {
+						$year: "$createdAt",
+					},
+					month: {
+						$month: "$createdAt",
+					},
+				},
+				count: { $sum: 1 },
+			},
+		},
+		{ $sort: { "_id.year": -1, "_id.month": -1 } },
+		{ $limit: 6 },
+	]);
+	monthlyApplications = monthlyApplications
+		.map((item) => {
+			const {
+				_id: { year, month },
+				count,
+			} = item;
+			const date = moment()
+				.month(month - 1)
+				.year(year)
+				.format("MMM Y");
+			return { date, count };
+		})
+		.reverse();
 	res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };
