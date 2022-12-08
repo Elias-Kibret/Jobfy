@@ -194,13 +194,29 @@ const AppProvider = ({ children }) => {
 	const getAllJob = async () => {
 		dispatch({ type: GET_JOBS_BEGIN })
 		try {
-			const response = await AuthFetch.get('/job')
+			const  response = await AuthFetch.get('/job')
+			console.log(response.data)
+			const { jobs, totalJobs, numOfPages } = response.data
+			dispatch({
+				type: GET_JOBS_SUCCESS, payload: {
+					jobs,
+					totalJobs,
+					numOfPages
+			}})
 			
 		} catch (error) {
 			
 		}
+		clearAlert()
 	}
 	
+
+	const setEditJob = async(id) => {
+		console.log(`set edit job :${id}`)
+	}
+	const deleteJob = async (id) => {
+		console.log(`set delete job ${id}`)
+	}
 
 	return (
 		<AppContext.Provider value={{
@@ -213,7 +229,9 @@ const AppProvider = ({ children }) => {
 			logoutUser,
 			handleChange,
 			createJob,
-			getAllJob
+			getAllJob,
+			setEditJob,
+			deleteJob
 		}}>
 			{/* Render child components */}
 			{children}
