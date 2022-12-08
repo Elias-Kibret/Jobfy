@@ -18,7 +18,9 @@ import {
 	CREATE_JOB_SUCCESS,
 	GET_JOBS_BEGIN,
 	GET_JOBS_SUCCESS,
-	GET_JOBS_ERROR
+	GET_JOBS_ERROR,
+	SET_EDIT_JOB,
+	SET_EDIT_SUCCESS
 } from "./actions";
 
 
@@ -212,7 +214,29 @@ const AppProvider = ({ children }) => {
 	
 
 	const setEditJob = async(id) => {
-		console.log(`set edit job :${id}`)
+		dispatch({type:SET_EDIT_JOB,payload:{id}})
+	}
+	const editJob = async(currentData) => {
+		const { editJobId } = state
+		try {
+		
+			const response = await AuthFetch.patch(`/job/${editJobId}`, currentData)
+			const {company,position,status,jobType,jobLocation}=response
+			dispatch({
+				type: SETUP_USER_SUCCESS, payload: {
+					company,
+					position,
+					status,
+					jobType,
+					jobLocation
+				
+			}})
+			
+		} catch (error) {
+			
+		}
+		
+		
 	}
 	const deleteJob = async (id) => {
 		console.log(`set delete job ${id}`)
@@ -231,7 +255,8 @@ const AppProvider = ({ children }) => {
 			createJob,
 			getAllJob,
 			setEditJob,
-			deleteJob
+			deleteJob,
+			editJob
 		}}>
 			{/* Render child components */}
 			{children}

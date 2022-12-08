@@ -33,6 +33,7 @@ const jobSchema = new mongoose.Schema(
 			required: [true, "Please provide user"],
 		},
 	},
+
 	{
 		timestamps: true,
 	}

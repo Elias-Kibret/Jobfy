@@ -17,7 +17,8 @@ const AddJob = () => {
 		status,
 		statusOptions,
 		isLoading,
-		createJob
+		createJob,
+		editJob
 	} = useAppContext()
 	 
 	const handelSubmit = (e) => {
@@ -27,6 +28,7 @@ const AddJob = () => {
 			return
 		}
 		if (isEditing) {
+			editJob()
 			return
 		}
 		createJob()
