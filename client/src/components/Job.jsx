@@ -7,7 +7,8 @@ import JobInfo from './JobInfo'
 
 const Job = ({ company, createdAt, _id, position, jobLocation, jobType, status }) => {
   const {	setEditJob,
-    deleteJob} =useAppContext()
+    deleteJob } = useAppContext()
+  
   let date = moment(createdAt)
   date=date.format('MMM Do ,YYYY')
   return (

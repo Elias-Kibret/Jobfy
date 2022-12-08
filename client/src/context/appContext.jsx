@@ -19,8 +19,13 @@ import {
 	GET_JOBS_BEGIN,
 	GET_JOBS_SUCCESS,
 	GET_JOBS_ERROR,
-	SET_EDIT_JOB,
-	SET_EDIT_SUCCESS
+	SET_EDIT_BEGIN,
+	SET_EDIT_SUCCESS,
+	SET_DELETE_BEGIN,
+	SET_DELETE_SUCCESS,
+	EDIT_JOBS_BEGIN,
+	EDIT_JOBS_SUCCESS,
+	EDIT_JOBS_ERROR
 } from "./actions";
 
 
@@ -213,33 +218,47 @@ const AppProvider = ({ children }) => {
 	}
 	
 
-	const setEditJob = async(id) => {
-		dispatch({type:SET_EDIT_JOB,payload:{id}})
+	const setEditJob = async (id) => {
+	
+		dispatch({type:SET_EDIT_BEGIN,payload:{id}})
 	}
-	const editJob = async(currentData) => {
-		const { editJobId } = state
+
+
+	const editJob = async (  ) => {
+		dispatch({type:EDIT_JOBS_BEGIN})
 		try {
+			const { company,
+				jobType,
+				jobLocation,
+				status,
+				position
+			 } = state
 		
-			const response = await AuthFetch.patch(`/job/${editJobId}`, currentData)
-			const {company,position,status,jobType,jobLocation}=response
-			dispatch({
-				type: SETUP_USER_SUCCESS, payload: {
-					company,
-					position,
-					status,
-					jobType,
-					jobLocation
-				
-			}})
+			const response = await AuthFetch.patch(`/job/${state?.editJobId}`, {
+				 company,
+				jobType,
+				jobLocation,
+				status,
+				position
+			}	)
+			dispatch({ type: EDIT_JOBS_SUCCESS})
+			dispatch({type:CLEAR_VALUES})
 			
 		} catch (error) {
-			
+			if (error.response.status === 401) return
+			dispatch({ type: EDIT_JOBS_ERROR, payload: { msg: error.response.msg } })
 		}
 		
 		
 	}
-	const deleteJob = async (id) => {
-		console.log(`set delete job ${id}`)
+	const deleteJob = async (jobId) => {
+		// dispatch({ type: SET_DELETE_BEGIN })
+		try {
+			await AuthFetch.delete(`/job/${jobId}`)
+			getAllJob()
+		} catch (error) {
+		
+		}
 	}
 
 	return (

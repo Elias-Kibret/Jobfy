@@ -3,6 +3,7 @@ import jobModel from "../Model/JobModel.js";
 import { BadREquestError, NotFoundError } from "../Errors/index.js";
 import { StatusCodes } from "http-status-codes";
 import { CustomAPIError } from "../Errors/custom-API-Error.js";
+import checkPermissions from "../utils/checkPermission.js";
 export const createJob = async (req, res) => {
 	const { company, position, status, jobType, jobLocation } = req.body;
 
@@ -23,7 +24,9 @@ export const deleteJob = async (req, res) => {
 	if (!job) {
 		throw new CustomAPIError(`No jb with id :${jobId}`);
 	}
+	checkPermissions(req.user, job.createdBy);
 	await job.remove();
+	res.status(StatusCodes.OK).json("Delete");
 };
 export const getAllJobs = async (req, res) => {
 	const jobs = await jobModel.find({ createdBy: req.user });
@@ -41,6 +44,7 @@ export const updateJob = async (req, res) => {
 	if (!job) {
 		throw new NotFoundError(`No job with id ${jobId}`);
 	}
+	checkPermissions(req.user, job.createdBy);
 	const updatedJob = await jobModel.findOneAndUpdate({ _id: jobId }, req.body, {
 		new: true,
 	});

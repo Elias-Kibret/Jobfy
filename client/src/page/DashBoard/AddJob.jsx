@@ -20,7 +20,6 @@ const AddJob = () => {
 		createJob,
 		editJob
 	} = useAppContext()
-	 
 	const handelSubmit = (e) => {
 		e.preventDefault()
 		if (!position || !company || !jobLocation) {
