@@ -4,6 +4,7 @@ import { BadREquestError, NotFoundError } from "../Errors/index.js";
 import { StatusCodes } from "http-status-codes";
 import { CustomAPIError } from "../Errors/custom-API-Error.js";
 import checkPermissions from "../utils/checkPermission.js";
+import mongoose from "mongoose";
 export const createJob = async (req, res) => {
 	const { company, position, status, jobType, jobLocation } = req.body;
 
@@ -52,9 +53,22 @@ export const updateJob = async (req, res) => {
 	res.status(StatusCodes.OK).json(updatedJob);
 };
 export const showStats = async (req, res) => {
-	try {
-		res.status(200).json("successfull");
-	} catch (error) {
-		res.status(500).json(error);
-	}
+	let stats = await jobModel.aggregate([
+		{ $match: { createdBy: mongoose.Types.ObjectId(req.user) } },
+		{ $group: { _id: "$status", count: { $sum: 1 } } },
+	]);
+
+	stats = stats.reduce((acc, cur) => {
+		const { _id: title, count } = cur;
+		acc[title] = count;
+		return acc;
+	}, {});
+
+	const defaultStats = {
+		pending: stats.pending || 0,
+		interview: stats.interview || 0,
+		declined: stats.declined || 0,
+	};
+	let monthlyApplications = [];
+	res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };

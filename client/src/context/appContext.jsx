@@ -25,7 +25,9 @@ import {
 	SET_DELETE_SUCCESS,
 	EDIT_JOBS_BEGIN,
 	EDIT_JOBS_SUCCESS,
-	EDIT_JOBS_ERROR
+	EDIT_JOBS_ERROR,
+	SHOW_STATS_BEGIN,
+	SHOW_STATS_SUCCESS
 } from "./actions";
 
 
@@ -56,7 +58,9 @@ export const initialState = {
 	jobs: [],
 	totalJobs: 0,
 	numOfpages: 1,
-	pages:1
+	pages: 1,
+	stats:{},
+	monthlyApplications:[]
 };
 //Create context
 const AppContext = React.createContext();
@@ -260,7 +264,21 @@ const AppProvider = ({ children }) => {
 		
 		}
 	}
-
+	const showStats = async () => {
+		dispatch({ type: SHOW_STATS_BEGIN })
+		try {
+			const response = await AuthFetch.get(`/job/stats`)
+			dispatch({
+				type: SHOW_STATS_SUCCESS, payload: {
+					stats: response.data.defaultStats,
+					monthlyApplications:response.data.monthlyApplications
+			}})
+		} catch (error) {
+			console.log(error.response.msg)
+		}
+		clearAlert()
+	}
+console.log(showStats)
 	return (
 		<AppContext.Provider value={{
 			...state,
@@ -275,7 +293,8 @@ const AppProvider = ({ children }) => {
 			getAllJob,
 			setEditJob,
 			deleteJob,
-			editJob
+			editJob,
+			showStats
 		}}>
 			{/* Render child components */}
 			{children}

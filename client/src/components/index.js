@@ -7,6 +7,10 @@ import NavLinks from "./NavLinks";
 import Alert from "./Alert";
 import SearchContainer from "./SearchContainer";
 import JobContainer from "./JobContainer";
+import StatsItem from "./StatsItem";
+import StatsContainer from "./StatsContainer";
+import Loading from "./Loading";
+import ChartsContainer from "./ChartsContainer";
 export {
 	Logo,
 	FormRow,
@@ -17,4 +21,8 @@ export {
 	Alert,
 	JobContainer,
 	SearchContainer,
+	StatsItem,
+	StatsContainer,
+	Loading,
+	ChartsContainer,
 };
