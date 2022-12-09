@@ -28,7 +28,8 @@ import {
 	EDIT_JOBS_ERROR,
 	SHOW_STATS_BEGIN,
 	SHOW_STATS_SUCCESS,
-	CLEAR_FILTERS
+	CLEAR_FILTERS,
+	CHANGE_PAGE
 } from "./actions";
 
 
@@ -59,7 +60,7 @@ export const initialState = {
 	jobs: [],
 	totalJobs: 0,
 	numOfpages: 1,
-	pages: 1,
+	page: 1,
 	stats:{},
 	monthlyApplications: [],
 	search: '',
@@ -84,9 +85,9 @@ const AppProvider = ({ children }) => {
 	})
 	AuthFetch.interceptors.request.use((config) => {
 		// Do something before request is sent
-		console.log(state.token)
+
 		config.headers.Authorization = `Bearer ${state.token}`
-		console.log(config)
+	
 	    return config	
 	}, (error) => {
 		// Do something with request error
@@ -211,8 +212,8 @@ const AppProvider = ({ children }) => {
 	}
 
 	const getAllJob = async () => {
-		const { search, searchStatus, searchType, sort } = state
-		let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`
+		const {page, search, searchStatus, searchType, sort } = state
+		let url = `/job?status=${searchStatus}&jobType=${searchType}&sort=${sort}`
 		if (search) {
 			url=url+`&search=${search}`
 		}
@@ -295,6 +296,9 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: CLEAR_FILTERS })
 		
 	}
+	const changePage = (page) => {
+		dispatch({type:CHANGE_PAGE,payload:{page}})
+	}
 
 	return (
 		<AppContext.Provider value={{
@@ -312,7 +316,8 @@ const AppProvider = ({ children }) => {
 			deleteJob,
 			editJob,
 			showStats,
-			clearFilters
+			clearFilters,
+			changePage 
 		}}>
 			{/* Render child components */}
 			{children}

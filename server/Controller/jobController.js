@@ -44,25 +44,29 @@ export const getAllJobs = async (req, res) => {
 	if (search) {
 		queryObject.position = { $regex: search, $options: "i" };
 	}
+	let sortParams = "";
+	if (sort !== undefined && sort === "latest") {
+		sortParams = "-createdAt";
+	}
+	if (sort !== undefined && sort === "oldest") {
+		sortParams = "createdAt";
+	}
+	if (sort !== undefined && sort === "a-z") {
+		sortParams = "position";
+	}
+	if (sort !== undefined && sort === "z-a") {
+		sortParams = "-position";
+	}
+	console.log(queryObject);
+	let result = jobModel.find(queryObject).sort(sortParams);
 
-	let result = await jobModel.find(queryObject);
-	if (sort === "latest") {
-		result = result.sort("-createdAt");
-	}
-	if (sort === "oldest") {
-		result = result.sort("createdAt");
-	}
-	if (sort === "a-z") {
-		result = result.sort("position");
-	}
-	if (sort === "z-a") {
-		result = result.sort("-position");
-	}
+	console.log(result);
+
 	const page = Number(req.query.page) || 1;
 	const limit = Number(req.query.limit) || 10;
 	const skip = (page - 1) * limit;
 	result = result.skip(skip).limit(limit);
-	const jobs = result;
+	const jobs = await result;
 
 	const totalJobs = await jobModel.countDocuments(queryObject);
 	const numOfPages = Math.ceil(totalJobs / limit);
