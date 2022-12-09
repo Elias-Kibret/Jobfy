@@ -213,7 +213,7 @@ const AppProvider = ({ children }) => {
 
 	const getAllJob = async () => {
 		const {page, search, searchStatus, searchType, sort } = state
-		let url = `/job?status=${searchStatus}&jobType=${searchType}&sort=${sort}`
+		let url = `/job?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`
 		if (search) {
 			url=url+`&search=${search}`
 		}

@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-client":"cd..&&cd client && npm run build",
     "server": "nodemon server.js",
     "client": "npm run dev --prefix client",
     "start": "concurrently   \"npm run server\" \"cd..&& cd client && npm run dev \" "
