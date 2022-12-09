@@ -31,7 +31,34 @@ export const deleteJob = async (req, res) => {
 	res.status(StatusCodes.OK).json("Delete");
 };
 export const getAllJobs = async (req, res) => {
-	const jobs = await jobModel.find({ createdBy: req.user });
+	const { status, search, jobType, sort } = req.query;
+	const queryObject = {
+		createdBy: req.user,
+	};
+	if (status !== undefined && status !== "all") {
+		queryObject.status = status;
+	}
+	if (jobType !== undefined && jobType !== "all") {
+		queryObject.jobType = jobType;
+	}
+	if (search) {
+		queryObject.position = { $regex: search, $options: "i" };
+	}
+
+	let result = await jobModel.find(queryObject);
+	if (sort === "latest") {
+		result = result.sort("-createdAt");
+	}
+	if (sort === "oldest") {
+		result = result.sort("createdAt");
+	}
+	if (sort === "a-z") {
+		result = result.sort("position");
+	}
+	if (sort === "z-a") {
+		result = result.sort("-position");
+	}
+	const jobs = result;
 	res
 		.status(StatusCodes.OK)
 		.json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
