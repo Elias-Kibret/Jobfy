@@ -27,7 +27,8 @@ import {
 	EDIT_JOBS_SUCCESS,
 	EDIT_JOBS_ERROR,
 	SHOW_STATS_BEGIN,
-	SHOW_STATS_SUCCESS
+	SHOW_STATS_SUCCESS,
+	CLEAR_FILTERS
 } from "./actions";
 
 
@@ -60,7 +61,14 @@ export const initialState = {
 	numOfpages: 1,
 	pages: 1,
 	stats:{},
-	monthlyApplications:[]
+	monthlyApplications: [],
+	search: '',
+	searchStatus: 'all',
+	sort: 'latest',
+	sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
+	searchType: 'all',
+	
+	
 };
 //Create context
 const AppContext = React.createContext();
@@ -203,9 +211,14 @@ const AppProvider = ({ children }) => {
 	}
 
 	const getAllJob = async () => {
+		const { search, searchStatus, searchType, sort } = state
+		let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`
+		if (search) {
+			url=url+`&search=${search}`
+		}
 		dispatch({ type: GET_JOBS_BEGIN })
 		try {
-			const  response = await AuthFetch.get('/job')
+			const  response = await AuthFetch.get(url)
 			console.log(response.data)
 			const { jobs, totalJobs, numOfPages } = response.data
 			dispatch({
@@ -278,6 +291,10 @@ const AppProvider = ({ children }) => {
 		}
 		clearAlert()
 	}
+	const clearFilters = () => {
+		dispatch({ type: CLEAR_FILTERS })
+		
+	}
 
 	return (
 		<AppContext.Provider value={{
@@ -294,7 +311,8 @@ const AppProvider = ({ children }) => {
 			setEditJob,
 			deleteJob,
 			editJob,
-			showStats
+			showStats,
+			clearFilters
 		}}>
 			{/* Render child components */}
 			{children}

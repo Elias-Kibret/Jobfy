@@ -11,6 +11,7 @@ import StatsItem from "./StatsItem";
 import StatsContainer from "./StatsContainer";
 import Loading from "./Loading";
 import ChartsContainer from "./ChartsContainer";
+import { FormRowSelect } from "./FormRowSelect";
 export {
 	Logo,
 	FormRow,
@@ -25,4 +26,5 @@ export {
 	StatsContainer,
 	Loading,
 	ChartsContainer,
+	FormRowSelect,
 };

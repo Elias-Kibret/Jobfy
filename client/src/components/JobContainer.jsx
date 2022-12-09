@@ -4,11 +4,11 @@ import Loading from "./Loading"
 import Job from "./Job"
 import Wrapper from "../assets/wrappers/JobsContainer"
 const JobContainer = () => {
-    const { getAllJob, jobs, isLoading, page, totalJobs } = useAppContext()
+    const { getAllJob, jobs, isLoading, page, totalJobs,searchStatus,searchType,sort,search } = useAppContext()
     useEffect(() => {
         getAllJob()  
         
-    }, [])
+    }, [searchStatus,searchType,sort,search ])
     if (isLoading) {
         return<Loading center/>
     }
