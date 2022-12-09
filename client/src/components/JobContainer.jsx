@@ -2,9 +2,10 @@ import { useAppContext } from "../context/appContext"
 import { useEffect } from "react"
 import Loading from "./Loading"
 import Job from "./Job"
+import PageBtnConatiner from "./PageBtnConatiner"
 import Wrapper from "../assets/wrappers/JobsContainer"
 const JobContainer = () => {
-    const { getAllJob, jobs, isLoading, page, totalJobs,searchStatus,searchType,sort,search } = useAppContext()
+    const { getAllJob, jobs, isLoading, page, totalJobs,searchStatus,searchType,sort,search ,numOfPages} = useAppContext()
     useEffect(() => {
         getAllJob()  
         
@@ -30,6 +31,8 @@ const JobContainer = () => {
               })}
               
           </div>
+          {numOfPages>1&&<PageBtnConatiner/>}
+          
 </Wrapper>
   )
 }
