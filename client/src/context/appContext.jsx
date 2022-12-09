@@ -278,7 +278,7 @@ const AppProvider = ({ children }) => {
 		}
 		clearAlert()
 	}
-console.log(showStats)
+
 	return (
 		<AppContext.Provider value={{
 			...state,
