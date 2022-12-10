@@ -42,8 +42,6 @@ export const login = async (req, res) => {
 	res.status(StatusCodes.OK).json({ user, token });
 };
 
-// 👨‍💻 Elias Kibret
-
 export const updateUser = async (req, res) => {
 	const { email, name, lastName, location } = req.body;
 	if (!email || !name || !lastName || !location) {
