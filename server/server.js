@@ -6,9 +6,17 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./DB/connect.js";
 import morgan from "morgan";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+import helmet from "helmet";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
 dotenv.config();
 const app = express();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname), "../client/dist"));
 //routes
 import authRouter from "./Routes/authRoutes.js";
 import jobRouter from "./Routes/jobRoutes.js";
@@ -24,10 +32,15 @@ if (process.env.NODE_ENV !== "production") {
 	app.use(morgan("dev"));
 }
 app.use(express.json());
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 console.log("hello");
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/job", authenticate_Middleware, jobRouter);
-
+app.get("*", (req, res) => {
+	res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+});
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
