@@ -54,6 +54,9 @@ const Register = () => {
 		}
 	},[user,navigate])
 	return (
+		<Wrapper>
+
+	
 		<div className="full-page">
 			<form className="form" onSubmit={onSubmit}>
 				<Logo />
@@ -86,7 +89,22 @@ const Register = () => {
 					handleChange={handleChange}
 				/>
 			
-				<button type="sumbit" className="btn btn-block">Submit</button>
+					<button type="sumbit" className="btn btn-block">Submit</button>
+					<button
+						type="button"
+						className="btn btn-block btn-hipster"
+						disabled={isLoading}
+						onClick={() => {
+							setupUser({
+								currentUser:{email:"Test@gmail.com",password:"test123"},
+								endPoint: 'login',
+								alertText:'Login sucessful'
+							})
+						}}
+					>
+						{isLoading?"Loading...":"Demo"}
+						
+					</button>
 				<p>
 					{values.isMember?'Not a Member Yet ?':'Already a member?'}
 					<button type="button" onClick={toggleMemeber} className="member-btn">
@@ -94,7 +112,8 @@ const Register = () => {
 					</button>
 				</p>
 			</form>
-		</div>
+			</div>
+			</Wrapper>
 	);
 };
 export default Register;
