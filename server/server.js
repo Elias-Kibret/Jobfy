@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname), "../client/dist"));
+app.use(express.static(path.resolve(__dirname, "../client/dist")));
 //routes
 import authRouter from "./Routes/authRoutes.js";
 import jobRouter from "./Routes/jobRoutes.js";

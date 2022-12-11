@@ -30,9 +30,12 @@ const SearchContainer = () => {
 return (e) => {
   setLocalSearch(e.target.value)
   clearInterval(timeoutID)
-  timeoutID=set
+  timeoutID = setTimeout(() => {
+    handleChange({name:e.target.name,value:localSearch})
+  },1000)
     }
   }
+  const optimizedDebounce=useMemo(()=>debounce(),[])
   return (
     <Wrapper>
       <form className='form'>
@@ -42,7 +45,7 @@ return (e) => {
           <FormRow
             type='text'
             name='search'
-            value={localSearch}
+            value={optimizedDebounce}
             handleChange={debounce()} >
             
             </FormRow>
