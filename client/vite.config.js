@@ -7,12 +7,6 @@ import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
 export default defineConfig({
 	plugins: [react(), viteCommonjs(), ""],
 	build: {
-		rollupOptions: {
-			external: [
-				"react", // ignore react stuff
-				"react-dom",
-			],
-		},
 		chunkSizeWarningLimit: 1000,
 	},
 	optimizeDeps: {
