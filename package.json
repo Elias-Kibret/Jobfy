@@ -9,7 +9,7 @@
     "setup-production": "rm -rf package-lock.json && npm cache clean --force && npm run install-client && npm run build-client && npm install && npm run server",
     "install-client": "cd client && npm install",
     "build-client": "cd client && npm run build",
-    "server": "nodemon server.js",
+    "server": "node server.js",
     "client": "npm run dev --prefix client",
     "start": "concurrently   \"npm run server\" \"cd client && npm run dev \" "
   },
