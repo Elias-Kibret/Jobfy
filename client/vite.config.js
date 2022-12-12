@@ -13,6 +13,7 @@ export default defineConfig({
 				"react-dom",
 			],
 		},
+		chunkSizeWarningLimit: 1000,
 	},
 	optimizeDeps: {
 		include: ["styled-components"],
