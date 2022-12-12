@@ -31,7 +31,7 @@ return (e) => {
   setLocalSearch(e.target.value)
   clearInterval(timeoutID)
   timeoutID = setTimeout(() => {
-    handleChange({name:e.target.name,value:localSearch})
+    handleChange({ name: e.target.name, value: e.target.value })
   },1000)
     }
   }
@@ -45,8 +45,8 @@ return (e) => {
           <FormRow
             type='text'
             name='search'
-            value={optimizedDebounce}
-            handleChange={debounce()} >
+            value={localSearch}
+            handleChange={optimizedDebounce} >
             
             </FormRow>
           

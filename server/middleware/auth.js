@@ -13,6 +13,7 @@ const authenticate_Middleware = async (req, res, next) => {
 		jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
 			if (user) {
 				req.user = user.userId;
+
 				next();
 			}
 			if (err) {
