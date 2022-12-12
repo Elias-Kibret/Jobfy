@@ -35,7 +35,6 @@ app.use(express.json());
 app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
-console.log("hello");
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/job", authenticate_Middleware, jobRouter);
 app.get("*", (req, res) => {
