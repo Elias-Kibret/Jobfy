@@ -141,15 +141,14 @@ const AppProvider = ({ children }) => {
 	
 
 	const setupUser = async ({ currentUser, endPoint, alertText }) => {
-		 console.log(currentUser, endPoint, alertText)
-		console.log(endPoint)
+		
 		dispatch({ type: SETUP_USER_BEGIN })
 		try {
 
 			const response = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
-			// console.log(response.data)
+			
 			const { user, token, location } = response.data
-			console.log(user)
+			
 			dispatch({
 				type: SETUP_USER_SUCCESS,
 			payload:{user,token,location,alertText}
@@ -159,7 +158,7 @@ const AppProvider = ({ children }) => {
 			
 			dispatch({
 				type:SETUP_USER_ERROR,
-			payload:{msg:"error.response.data.msg"}})
+			payload:{msg:"Sorry Try agian"}})
 		}
 		clearAlert()
 	}
@@ -192,7 +191,6 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: CREATE_JOB_BEGIN })
 		try {
 			const { position, company, jobLocation, jobType, status } = state
-			console.log(state)
 			await AuthFetch.post('/job', {
 				position,
 				company,
@@ -220,7 +218,7 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: GET_JOBS_BEGIN })
 		try {
 			const  response = await AuthFetch.get(url)
-			console.log(response.data)
+		
 			const { jobs, totalJobs, numOfPages } = response.data
 			dispatch({
 				type: GET_JOBS_SUCCESS, payload: {

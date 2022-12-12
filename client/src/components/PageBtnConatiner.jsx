@@ -21,8 +21,7 @@ const PageBtnConatiner = () => {
     const pages = Array.from({ length: numOfPages }, (_, index) => {
         return index+1
     })
-    console.log(pages)
-    console.log(numOfPages)
+    
   return (
       <Wrapper>
           <button className="prev-btn" onClick={prevPage}>

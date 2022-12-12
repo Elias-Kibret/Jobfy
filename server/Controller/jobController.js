@@ -86,7 +86,7 @@ export const updateJob = async (req, res) => {
 	const updatedJob = await jobModel.findOneAndUpdate({ _id: jobId }, req.body, {
 		new: true,
 	});
-	console.log(updatedJob);
+
 	res.status(StatusCodes.OK).json(updatedJob);
 };
 export const showStats = async (req, res) => {

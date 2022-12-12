@@ -25,7 +25,7 @@ const Navbar = () => {
                     <button
                         type="button"
                         className='btn'
-                        onClick={()=>{console.log(setShowLogout(!showLogout))}}
+                        onClick={()=>{setShowLogout(!showLogout)}}
                     >
                         <FaUserCircle />
                    
