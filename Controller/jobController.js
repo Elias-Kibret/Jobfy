@@ -57,10 +57,8 @@ export const getAllJobs = async (req, res) => {
 	if (sort !== undefined && sort === "z-a") {
 		sortParams = "-position";
 	}
-	console.log(queryObject);
-	let result = jobModel.find(queryObject).sort(sortParams);
 
-	console.log(result);
+	let result = jobModel.find(queryObject).sort(sortParams);
 
 	const page = Number(req.query.page) || 1;
 	const limit = Number(req.query.limit) || 10;

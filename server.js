@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, "../client/dist")));
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 //routes
 import authRouter from "./Routes/authRoutes.js";
 import jobRouter from "./Routes/jobRoutes.js";
@@ -38,7 +38,7 @@ app.use(mongoSanitize());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/job", authenticate_Middleware, jobRouter);
 app.get("*", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+	res.sendFile(path.resolve(__dirname, "./client/dist/index.html"));
 });
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

@@ -8,7 +8,7 @@ const authenticate_Middleware = async (req, res, next) => {
 		throw new UnauthenticatedError("Authentication Invalid");
 	}
 	const token = authHeader.split(" ")[1];
-	console.log(token);
+
 	try {
 		jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
 			if (user) {
